@@ -47,6 +47,9 @@ const config: Config = {
         docsDir: 'docs',
         title: '金数据开放平台文档',
         description: '金数据 API、Webhook、URL 传参等系统集成能力文档',
+        pathTransformation: {
+          ignorePaths: ['docs'],
+        },
       },
     ],
   ],
