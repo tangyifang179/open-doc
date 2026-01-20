@@ -1,0 +1,59 @@
+# 金数据 API v1 接口
+
+## 获取表单列表
+
+```
+GET /api/v1/forms
+```
+
+[查看详情](api_v1/endpoints/get_forms)
+
+## 获取单个表单结构
+
+```
+GET /api/v1/forms/FORM_TOKEN
+```
+
+[查看详情](api_v1/endpoints/get_form)
+
+## 获取表单数据列表
+
+```
+GET /api/v1/forms/FORM_TOKEN/entries
+```
+
+[查看详情](api_v1/endpoints/get_form_entries)
+
+## 新增数据
+
+```
+POST /api/v1/forms/FORM_TOKEN/entries
+```
+
+[查看详情](api_v1/endpoints/create_form_entry)
+
+## 获取表单单条数据
+
+```
+GET /api/v1/forms/FORM_TOKEN/entries/SERIAL_NUMBER
+```
+
+[查看详情](api_v1/endpoints/get_form_entry)
+
+## 更新数据
+
+```
+PUT /api/v1/forms/FORM_TOKEN/entries/SERIAL_NUMBER
+PATCH /api/v1/forms/FORM_TOKEN/entries/SERIAL_NUMBER
+POST /api/v1/forms/FORM_TOKEN/entries/SERIAL_NUMBER
+```
+
+[查看详情](api_v1/endpoints/update_form_entry)
+
+## 删除数据
+
+```
+DELETE /api/v1/forms/FORM_TOKEN/entries/SERIAL_NUMBER
+```
+
+[查看详情](api_v1/endpoints/delete_form_entry)
