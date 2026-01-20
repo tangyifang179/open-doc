@@ -38,6 +38,19 @@ const config: Config = {
     ],
   ],
 
+  plugins: [
+    [
+      'docusaurus-plugin-llms',
+      {
+        generateLLMsTxt: true,
+        generateLLMsFullTxt: true,
+        docsDir: 'docs',
+        title: '金数据开放平台文档',
+        description: '金数据 API、Webhook、URL 传参等系统集成能力文档',
+      },
+    ],
+  ],
+
   themeConfig: {
     image: 'img/logo.png',
     colorMode: {
