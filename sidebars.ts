@@ -76,7 +76,6 @@ const sidebars: SidebarsConfig = {
       label: '其他',
       items: [
         'best_practice',
-        'zapier/overview',
       ],
     },
   ],
