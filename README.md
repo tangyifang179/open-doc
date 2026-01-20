@@ -1,41 +1,42 @@
-# Website
+# 金数据开放平台文档
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+金数据开放平台文档中心，基于 [Docusaurus](https://docusaurus.io/) 构建。
 
-## Installation
+**线上地址**：https://open.jinshuju.net
 
-```bash
-yarn
-```
-
-## Local Development
+## 本地开发
 
 ```bash
-yarn start
+npm install
+npm run start
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+访问 http://localhost:3000 查看文档。
 
-## Build
+## 构建
 
 ```bash
-yarn build
+npm run build
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+构建产物在 `build` 目录，包含：
+- 静态 HTML 文件
+- `llms.txt` - AI/LLM 文档索引
+- `llms-full.txt` - 完整文档内容
 
-## Deployment
+## 部署
 
-Using SSH:
+推送到 `master` 分支后，GitHub Actions 自动构建并部署到 GitHub Pages。
 
-```bash
-USE_SSH=true yarn deploy
+## 文档结构
+
 ```
-
-Not using SSH:
-
-```bash
-GIT_USER=<Your GitHub username> yarn deploy
+docs/
+├── intro.md              # 首页
+├── api_v1/               # API v1 文档
+├── webhook/              # Webhook 文档
+├── url_params/           # URL 传参文档
+├── embedded/             # 表单嵌入文档
+├── api_code_alias/       # API CODE 重命名
+└── best_practice.md      # 场景案例
 ```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
