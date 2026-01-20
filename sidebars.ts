@@ -42,17 +42,6 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'API v4',
-      items: [
-        'api_v4/home',
-        'api_v4/authentication',
-        'api_v4/get_forms',
-        'api_v4/get_form',
-        'api_v4/get_form_entries',
-      ],
-    },
-    {
-      type: 'category',
       label: 'Webhook',
       items: [
         'webhook/home',
