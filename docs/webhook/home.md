@@ -16,4 +16,4 @@
 
 ### 2. 企业全局数据推送
 
-对于企业版用户，可以在企业设置中，配置一个[全局webhook](https://next.jinshuju.net/system/webhooks) 。配置成功后，企业内所有子账号的所有表单，都会生效。
+对于企业版用户，可以在企业设置中，配置一个[全局webhook](https://jinshuju.net/system/webhooks) 。配置成功后，企业内所有子账号的所有表单，都会生效。
