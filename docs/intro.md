@@ -10,7 +10,11 @@ title: 金数据开放平台
 
 目前金数据开放平台提供的能力包括：
 
-1. API (v1)
+1. MCP Server
+
+金数据 MCP（Model Context Protocol）Server，允许 AI 助手（如 Claude、ChatGPT 等）通过标准化的 MCP 协议，直接与金数据平台进行交互。AI 助手可以帮助用户管理表单、查询和操作数据，极大地提升工作效率。
+
+2. API (v1)
 
 金数据 API 提供了多个接口，使用者可以通过 API 获取表单信息、数据信息，也可以通过 API 来创建或者修改数据。
 

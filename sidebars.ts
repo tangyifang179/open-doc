@@ -9,6 +9,15 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'MCP Server',
+      items: [
+        'mcp/home',
+        'mcp/installation',
+        'mcp/tools',
+      ],
+    },
+    {
+      type: 'category',
       label: 'API v1',
       items: [
         'api_v1',
