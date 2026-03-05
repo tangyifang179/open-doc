@@ -15,7 +15,7 @@ title: MCP Server 安装与配置
 | JWT Token | 系统间调用 | 使用金数据签发的 JWT Token 进行 Bearer Token 认证，拥有全部权限 |
 | OAuth 2.0 | 第三方应用 | 标准 OAuth 2.0 授权流程，按 scope 控制权限 |
 
-API Key/Secret 的获取方式参考 [API v1 认证方式](/docs/api_v1/authentication) 中的「获取 Key/Secret」部分。
+API Key/Secret 的获取方式参考 [API v1 认证方式](/api_v1/authentication) 中的「获取 Key/Secret」部分。
 
 ## 在 Claude Desktop 中配置
 

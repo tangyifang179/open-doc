@@ -98,7 +98,7 @@ title: MCP Tools 列表
 | `form_token` | string | 是 | 表单的 token 或 ID |
 | `entry` | object | 是 | 数据内容，字段值以 API code 为 key（如 `field_1`、`field_2`） |
 
-数据格式参考：[数据结构说明(POST)](/docs/api_v1/schemas/entry_post)
+数据格式参考：[数据结构说明(POST)](/api_v1/schemas/entry_post)
 
 **所需 scope**：`write_entries`
 
