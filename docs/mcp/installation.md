@@ -27,7 +27,7 @@ API Key/Secret 的获取方式参考 [API v1 认证方式](/docs/api_v1/authenti
 {
   "mcpServers": {
     "jinshuju": {
-      "url": "https://jinshuju.net/api/mcp",
+      "url": "https://jinshuju.net/mcp",
       "headers": {
         "Authorization": "Basic BASE64_ENCODED_CREDENTIALS"
       }
@@ -44,7 +44,7 @@ API Key/Secret 的获取方式参考 [API v1 认证方式](/docs/api_v1/authenti
 {
   "mcpServers": {
     "jinshuju": {
-      "url": "https://jinshuju.net/api/mcp"
+      "url": "https://jinshuju.net/mcp"
     }
   }
 }
@@ -57,7 +57,7 @@ API Key/Secret 的获取方式参考 [API v1 认证方式](/docs/api_v1/authenti
 ### 使用 API Key/Secret 认证
 
 ```bash
-claude mcp add jinshuju -- https://jinshuju.net/api/mcp \
+claude mcp add jinshuju -- https://jinshuju.net/mcp \
   --header "Authorization: Basic BASE64_ENCODED_CREDENTIALS"
 ```
 
@@ -71,7 +71,7 @@ claude mcp add jinshuju -- https://jinshuju.net/api/mcp \
 {
   "mcpServers": {
     "jinshuju": {
-      "url": "https://jinshuju.net/api/mcp",
+      "url": "https://jinshuju.net/mcp",
       "headers": {
         "Authorization": "Basic BASE64_ENCODED_CREDENTIALS"
       }
@@ -86,7 +86,7 @@ claude mcp add jinshuju -- https://jinshuju.net/api/mcp \
 {
   "mcpServers": {
     "jinshuju": {
-      "url": "https://jinshuju.net/api/mcp"
+      "url": "https://jinshuju.net/mcp"
     }
   }
 }
@@ -104,7 +104,7 @@ claude mcp add jinshuju -- https://jinshuju.net/api/mcp \
 {
   "mcpServers": {
     "jinshuju": {
-      "serverUrl": "https://jinshuju.net/api/mcp",
+      "serverUrl": "https://jinshuju.net/mcp",
       "headers": {
         "Authorization": "Basic BASE64_ENCODED_CREDENTIALS"
       }
@@ -119,7 +119,7 @@ claude mcp add jinshuju -- https://jinshuju.net/api/mcp \
 {
   "mcpServers": {
     "jinshuju": {
-      "serverUrl": "https://jinshuju.net/api/mcp"
+      "serverUrl": "https://jinshuju.net/mcp"
     }
   }
 }
@@ -133,7 +133,7 @@ claude mcp add jinshuju -- https://jinshuju.net/api/mcp \
 
 | 配置项 | 值 |
 | ------ | ------ |
-| MCP Server URL | `https://jinshuju.net/api/mcp` |
+| MCP Server URL | `https://jinshuju.net/mcp` |
 | 认证方式（API Key/Secret） | `Authorization: Basic BASE64(api_key:api_secret)` |
 | 认证方式（OAuth） | 无需额外配置，工具会自动发起 OAuth 授权流程 |
 
