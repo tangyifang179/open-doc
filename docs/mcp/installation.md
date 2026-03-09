@@ -7,12 +7,11 @@ title: MCP Server 安装与配置
 
 ## 认证方式
 
-金数据 MCP Server 支持以下三种认证方式：
+金数据 MCP Server 支持以下两种认证方式：
 
 | 认证方式 | 适用场景 | 说明 |
 | ------ | ------ | ------ |
 | API Key/Secret | 企业内部集成 | 通过金数据后台获取 Key/Secret，使用 HTTP Basic 认证，拥有全部权限 |
-| JWT Token | 系统间调用 | 使用金数据签发的 JWT Token 进行 Bearer Token 认证，拥有全部权限 |
 | OAuth 2.0 | 第三方应用 | 标准 OAuth 2.0 授权流程，按 scope 控制权限 |
 
 API Key/Secret 的获取方式参考 [API v1 认证方式](/api_v1/authentication) 中的「获取 Key/Secret」部分。
