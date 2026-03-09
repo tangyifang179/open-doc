@@ -12,7 +12,6 @@ const sidebars: SidebarsConfig = {
       label: 'MCP Server',
       items: [
         'mcp/index',
-        'mcp/installation',
       ],
     },
     {
