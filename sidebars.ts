@@ -11,9 +11,8 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'MCP Server',
       items: [
-        'mcp/home',
+        'mcp/index',
         'mcp/installation',
-        'mcp/tools',
       ],
     },
     {
