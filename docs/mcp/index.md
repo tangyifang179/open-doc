@@ -30,40 +30,13 @@ MCP（Model Context Protocol）是一种开放的标准化协议，用于连接 
 
 API Key/Secret 的获取方式参考 [API v1 认证方式](/api_v1/authentication) 中的「获取 Key/Secret」部分。
 
-## 在 Claude Desktop 中配置
+生成 `BASE64_ENCODED_CREDENTIALS`：
 
-编辑 Claude Desktop 配置文件（macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`）：
-
-### 使用 API Key/Secret 认证
-
-```json
-{
-  "mcpServers": {
-    "jinshuju": {
-      "url": "https://jinshuju.net/mcp",
-      "headers": {
-        "Authorization": "Basic BASE64_ENCODED_CREDENTIALS"
-      }
-    }
-  }
-}
+```bash
+echo -n "api_key:api_secret" | base64
 ```
 
-其中 `BASE64_ENCODED_CREDENTIALS` 为 `api_key:api_secret` 的 Base64 编码值。
-
-### 使用 OAuth 认证
-
-```json
-{
-  "mcpServers": {
-    "jinshuju": {
-      "url": "https://jinshuju.net/mcp"
-    }
-  }
-}
-```
-
-使用 OAuth 方式时，Claude Desktop 会自动引导你完成授权流程。
+将输出的字符串替换下方配置中的 `BASE64_ENCODED_CREDENTIALS` 即可。
 
 ## 在 Claude Code 中配置
 
@@ -151,6 +124,111 @@ claude mcp add jinshuju -- https://jinshuju.net/mcp
 将本网页发送给你的模型，并告诉它帮你安装金数据 MCP 即可。OpenClaw 会自动通过系统自带的 mcporter skill 完成安装和配置。
 
 > 使用前请确保已安装系统自带的 **mcporter** skill。
+
+### OAuth 授权流程说明
+
+**第 1 步：请求 MCP Server，获取资源元数据地址**
+
+```
+GET https://jinshuju.net/mcp
+```
+
+服务器返回 `401`，响应头中包含：
+
+```
+WWW-Authenticate: Bearer resource_metadata="https://jinshuju.net/.well-known/oauth-protected-resource"
+```
+
+**第 2 步：获取受保护资源元数据**
+
+```
+GET https://jinshuju.net/.well-known/oauth-protected-resource
+```
+
+响应：
+
+```json
+{
+  "resource": "https://jinshuju.net",
+  "authorization_servers": ["https://account.jinshuju.net"],
+  "scopes_supported": ["public", "profile", "forms", "read_entries", "write_entries", "form_setting", "read_contacts", "users"]
+}
+```
+
+从中获取授权服务器地址：`https://account.jinshuju.net`
+
+**第 3 步：获取授权服务器元数据**
+
+```
+GET https://account.jinshuju.net/.well-known/oauth-authorization-server
+```
+
+响应中包含各端点地址：
+
+```json
+{
+  "issuer": "https://account.jinshuju.net",
+  "authorization_endpoint": "https://account.jinshuju.net/oauth/authorize",
+  "token_endpoint": "https://account.jinshuju.net/oauth/token",
+  "registration_endpoint": "https://account.jinshuju.net/oauth/register",
+  "code_challenge_methods_supported": ["S256"],
+  "token_endpoint_auth_methods_supported": ["client_secret_basic", "client_secret_post", "none"]
+}
+```
+
+**第 4 步：动态客户端注册**
+
+```
+POST https://account.jinshuju.net/oauth/register
+Content-Type: application/json
+
+{
+  "client_name": "OpenClaw",
+  "redirect_uris": ["http://localhost:PORT/callback"],
+  "grant_types": ["authorization_code", "refresh_token"],
+  "response_types": ["code"],
+  "token_endpoint_auth_method": "none"
+}
+```
+
+服务器返回 `client_id` 等信息，用于后续授权。
+
+**第 5 步：发起 OAuth 授权码流程（使用 PKCE）**
+
+1. 生成 `code_verifier` 和 `code_challenge`（S256）
+2. 引导用户在浏览器中打开授权地址：
+
+```
+https://account.jinshuju.net/oauth/authorize?
+  response_type=code&
+  client_id=CLIENT_ID&
+  redirect_uri=http://localhost:PORT/callback&
+  scope=public+profile+forms+read_entries+write_entries&
+  code_challenge=CODE_CHALLENGE&
+  code_challenge_method=S256
+```
+
+3. 用户授权后，浏览器回调至 `redirect_uri`，携带 `code` 参数
+
+**第 6 步：用授权码换取访问令牌**
+
+```
+POST https://account.jinshuju.net/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&
+code=AUTHORIZATION_CODE&
+redirect_uri=http://localhost:PORT/callback&
+client_id=CLIENT_ID&
+code_verifier=CODE_VERIFIER
+```
+
+**第 7 步：使用访问令牌访问 MCP Server**
+
+```
+GET https://jinshuju.net/mcp
+Authorization: Bearer ACCESS_TOKEN
+```
 
 ## 在其他支持 MCP 的工具中配置
 
