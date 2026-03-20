@@ -8,7 +8,7 @@
 
 ## 认证方式
 
-[V1 Basic 认证方式](api_v1/authentication)
+[V1 Basic 认证方式](/api_v1/authentication)
 
 ## headers 设置
 
@@ -76,7 +76,7 @@ GET https://jinshuju.net/api/v1/forms/FORM_TOKEN
 | field_*.private | 是 | Bool | 字段隐藏 |
 | field_*.validation | 否 | Object | 字段校验信息 |
 
-> 字段详细数据，请[参考文档](api_v1/schemas/field)
+> 字段详细数据，请[参考文档](/api_v1/schemas/field)
 
 ## 示例代码
 

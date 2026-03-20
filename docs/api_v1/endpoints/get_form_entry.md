@@ -8,7 +8,7 @@
 
 ## 认证方式
 
-[V1 Basic 认证方式](api_v1/authentication)
+[V1 Basic 认证方式](/api_v1/authentication)
 
 ## headers 设置
 
@@ -65,7 +65,7 @@ GET https://jinshuju.net/api/v1/forms/FORM_TOKEN/entries/SERIAL_NUMBER
 | entry.created_at | 是 | Date | 数据提交时间 |
 | entry.updated_at | 是 | Date | 数据最后一次变更时间 |
 
-> 数据详细结构，请[参考文档](api_v1/schemas/entry)
+> 数据详细结构，请[参考文档](/api_v1/schemas/entry)
 
 > 注意：数据中的日期时间，使用的是 UTC 时间（例如：`"2021-09-28T02:59:42.539Z"`），接受者需要自行转换为自己所需要的时区（例如北京时间）
 

@@ -8,7 +8,7 @@
 
 ## 认证方式
 
-[V1 Basic 认证方式](api_v1/authentication)
+[V1 Basic 认证方式](/api_v1/authentication)
 
 ## headers 设置
 
