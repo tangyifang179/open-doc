@@ -42,15 +42,32 @@ echo -n "api_key:api_secret" | base64
 
 ### 使用 API Key/Secret 认证
 
+项目级别配置（仅当前项目生效）：
+
 ```bash
-claude mcp add jinshuju -- https://jinshuju.net/mcp \
+claude mcp add jinshuju --transport http https://jinshuju.net/mcp \
+  --header "Authorization: Basic BASE64_ENCODED_CREDENTIALS"
+```
+
+用户级别配置（所有项目生效）：
+
+```bash
+claude mcp add jinshuju -s user --transport http https://jinshuju.net/mcp \
   --header "Authorization: Basic BASE64_ENCODED_CREDENTIALS"
 ```
 
 ### 使用 OAuth 认证
 
+项目级别配置（仅当前项目生效）：
+
 ```bash
-claude mcp add jinshuju -- https://jinshuju.net/mcp
+claude mcp add jinshuju --transport http https://jinshuju.net/mcp
+```
+
+用户级别配置（所有项目生效）：
+
+```bash
+claude mcp add jinshuju -s user --transport http https://jinshuju.net/mcp
 ```
 
 使用 OAuth 方式时，Claude Code 会自动引导你完成授权流程。
