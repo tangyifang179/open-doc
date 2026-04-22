@@ -32,7 +32,7 @@
 POST https://jinshuju.net/api/v1/forms/FORM_TOKEN/copy
 
 {
-    "title": "产品需求调研表（副本）",
+    "name": "产品需求调研表（副本）",
     "folder_token": "aZ9bQ3"
 }
 ```
@@ -40,7 +40,7 @@ POST https://jinshuju.net/api/v1/forms/FORM_TOKEN/copy
 | 参数名称 | 是否必须 | 类型 | 说明 |
 | ------ | ------ | ------ | ------ |
 | FORM_TOKEN | 是 | String | 源表单 Token（URL 路径参数） |
-| title | 否 | String | 新表单的标题，默认 `副本_原标题` |
+| name | 否 | String | 新表单的标题，默认在原标题前加 `[新]`，例如 `[新]问卷调查表` |
 | folder_token | 否 | String | 目标文件夹 token；设置后新表单会放入该文件夹 |
 
 ### Response
@@ -70,7 +70,7 @@ Accept: application/json
 Authorization: Basic BASE_64_ENCODED_CREDENTIALS
 
 {
-  "title": "产品需求调研表（副本）",
+  "name": "产品需求调研表（副本）",
   "folder_token": "aZ9bQ3"
 }
 ```
@@ -87,7 +87,7 @@ form_token = 'YOUR_FORM_TOKEN'
 response = requests.post(
     f'https://jinshuju.net/api/v1/forms/{form_token}/copy',
     auth=(api_key, api_secret),
-    json={"title": "产品需求调研表（副本）", "folder_token": "aZ9bQ3"}
+    json={"name": "产品需求调研表（副本）", "folder_token": "aZ9bQ3"}
 )
 
 print(response.text)
@@ -107,7 +107,7 @@ api_secret = 'YOUR_API_SECRET'
 
 request = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
 request.basic_auth(api_key, api_secret)
-request.body = { title: '产品需求调研表（副本）', folder_token: 'aZ9bQ3' }.to_json
+request.body = { name: '产品需求调研表（副本）', folder_token: 'aZ9bQ3' }.to_json
 
 response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
   http.request(request)
