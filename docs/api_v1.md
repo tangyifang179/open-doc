@@ -7,6 +7,10 @@
 | 通过 API 操控账号所属表单 | | | ✔️ | ✔️ | ✔️ |
 | 通过 API 操控企业全部表单 | | | ✔️ | ✔️ | ✔️ |
 | 获取表单列表/表单结构 | | | ✔️ | ✔️ | ✔️ |
+| 创建/编辑/复制表单 | | | ✔️ | ✔️ | ✔️ |
+| 编辑表单主题 | | | ✔️ | ✔️ | ✔️ |
+| 获取文件夹列表/创建文件夹 | | | ✔️ | ✔️ | ✔️ |
+| 移动表单到/移出文件夹 | | | ✔️ | ✔️ | ✔️ |
 | 获取表单数据列表 | | | ✔️ | ✔️ | ✔️ |
 | 创建数据 | | | ✔️ | ✔️ | ✔️ |
 | 获取单条数据 | | | ✔️ | ✔️ | ✔️ |
@@ -15,10 +19,10 @@
 
 ## 目录
 
-* 简单且安全的身份认证方式（[认证方式文档](api_v1/authentication)）
-* 基于 HTTP Restful 风格的接口（[接口列表文档](api_v1/all)）
+* 简单且安全的身份认证方式（[认证方式文档](/api_v1/authentication)）
+* 基于 HTTP Restful 风格的接口（[接口列表文档](/api_v1/all)）
 * Schema
-  * [字段结构说明(GET)](api_v1/schemas/field)
-  * [数据结构说明(GET)](api_v1/schemas/entry)
-  * [数据结构说明(POST)](api_v1/schemas/entry_post)
-* [状态码/错误码](api_v1/status_code)
+  * [字段结构说明(GET)](/api_v1/schemas/field)
+  * [数据结构说明(GET)](/api_v1/schemas/entry)
+  * [数据结构说明(POST)](/api_v1/schemas/entry_post)
+* [状态码/错误码](/api_v1/status_code)

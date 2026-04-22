@@ -22,7 +22,7 @@
 
 * 个人版用户/企业子账号用户，以自己身份创建表单。
 * 企业全局 API，以企业 owner 身份创建表单。
-* 可选地将新表单放入某个文件夹，需传入该文件夹的 token（`folder_id` 参数同时兼容文件夹 id 与 token）。
+* 可选地将新表单放入某个文件夹，通过 `folder_token` 参数指定目标文件夹的 token（可通过[获取文件夹列表](/api_v1/endpoints/get_folders)得到）。
 
 ## 接口描述
 
@@ -49,7 +49,7 @@ POST https://jinshuju.net/api/v1/forms
         }
     ],
     "setting": { "success_message": "感谢您的反馈！" },
-    "folder_id": "aZ9bQ3"
+    "folder_token": "aZ9bQ3"
 }
 ```
 
@@ -70,7 +70,7 @@ POST https://jinshuju.net/api/v1/forms
 | fields[].dimensions | 否 | Array | 表格题列定义 |
 | description | 否 | String | 表单描述 |
 | setting.success_message | 否 | String | 提交成功后展示的消息 |
-| folder_id | 否 | String | 文件夹 id 或 token；设置后新表单会放入该文件夹 |
+| folder_token | 否 | String | 目标文件夹 token；设置后新表单会放入该文件夹 |
 
 #### 支持的字段类型
 
@@ -117,7 +117,7 @@ POST https://jinshuju.net/api/v1/forms
 | 400 | 参数校验失败（name 或 fields 为空、字段类型非法等） |
 | 401 | 未认证 |
 | 402 | 当前套餐不支持 V1 API |
-| 404 | 指定的 folder_id 不存在，或当前账号无权管理该文件夹 |
+| 404 | 指定的 folder_token 不存在，或当前账号无权管理该文件夹 |
 
 ## 示例代码
 
