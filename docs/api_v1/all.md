@@ -16,6 +16,62 @@ GET /api/v1/forms/FORM_TOKEN
 
 [查看详情](api_v1/endpoints/get_form)
 
+## 创建表单
+
+```
+POST /api/v1/forms
+```
+
+[查看详情](api_v1/endpoints/create_form)
+
+## 编辑表单
+
+```
+PATCH /api/v1/forms/FORM_TOKEN
+```
+
+[查看详情](api_v1/endpoints/update_form)
+
+## 复制表单
+
+```
+POST /api/v1/forms/FORM_TOKEN/copy
+```
+
+[查看详情](api_v1/endpoints/copy_form)
+
+## 编辑表单主题
+
+```
+PATCH /api/v1/forms/FORM_TOKEN/theme
+```
+
+[查看详情](api_v1/endpoints/update_form_theme)
+
+## 移动表单到/移出文件夹
+
+```
+PATCH /api/v1/forms/FORM_TOKEN/folder
+```
+
+[查看详情](api_v1/endpoints/update_form_folder)
+
+## 获取文件夹列表
+
+```
+GET /api/v1/folders
+```
+
+[查看详情](api_v1/endpoints/get_folders)
+
+## 创建文件夹
+
+```
+POST /api/v1/folders
+```
+
+[查看详情](api_v1/endpoints/create_folder)
+
 ## 获取表单数据列表
 
 ```
