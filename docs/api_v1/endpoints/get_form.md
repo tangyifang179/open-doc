@@ -60,7 +60,33 @@ GET https://jinshuju.net/api/v1/forms/FORM_TOKEN
                 "validation": {}
             }
         }
-    ]
+    ],
+    "setting": {
+        "entry_submit_mode": "show_message",
+        "success_message": "感谢您的反馈！",
+        "success_redirect_url": "",
+        "success_redirect_fields": [],
+        "show_entry_on_success": false,
+        "manually_close_rule": { "closed": false },
+        "by_time_range_close_rule": null,
+        "by_entries_close_rule": null,
+        "show_close_count_down": false,
+        "show_form_before_open": false,
+        "fill_frequency": {
+            "fill_type": "unlimited",
+            "condition": "",
+            "cycle_period": "every_day",
+            "cycles_per_period": 1,
+            "limited_time": 1,
+            "limited_field_api_codes": []
+        },
+        "password_required": false,
+        "access_password": null,
+        "allowed_audience": "public",
+        "entry_post_url": null,
+        "post_new_entry": true,
+        "post_updated_entry": false
+    }
 }
 ```
 
@@ -75,8 +101,11 @@ GET https://jinshuju.net/api/v1/forms/FORM_TOKEN
 | field_*.notes | 是 | String | 字段提示 |
 | field_*.private | 是 | Bool | 字段隐藏 |
 | field_*.validation | 否 | Object | 字段校验信息 |
+| setting | 是 | Object | 表单设置对象；字段列表与含义见[表单设置 Schema](/api_v1/schemas/form_setting)。未启用的嵌套规则（如 `by_time_range_close_rule`）以 `null` 返回。 |
 
 > 字段详细数据，请[参考文档](/api_v1/schemas/field)
+>
+> **提示**：[创建表单](/api_v1/endpoints/create_form) / [编辑表单](/api_v1/endpoints/update_form) 成功时返回的响应体结构与本接口一致，因此写入后可以直接从响应中读到最新的 `setting`。如果只想单独读取表单设置，也可以调用 `GET /api/v1/forms/FORM_TOKEN/setting`。
 
 ## 示例代码
 

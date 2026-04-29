@@ -64,6 +64,7 @@ const sidebars: SidebarsConfig = {
           label: 'Schema',
           items: [
             'api_v1/schemas/field',
+            'api_v1/schemas/form_setting',
             'api_v1/schemas/entry',
             'api_v1/schemas/entry_post',
           ],

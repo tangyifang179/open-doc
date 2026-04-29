@@ -48,7 +48,12 @@ POST https://jinshuju.net/api/v1/forms
             ]
         }
     ],
-    "setting": { "success_message": "感谢您的反馈！" },
+    "setting": {
+        "success_message": "感谢您的反馈！",
+        "password_required": true,
+        "access_password": "abc123",
+        "fill_frequency": { "fill_type": "once", "condition": "by_ip" }
+    },
     "folder_token": "aZ9bQ3"
 }
 ```
@@ -68,15 +73,37 @@ POST https://jinshuju.net/api/v1/forms
 | fields[].rating_max | 否 | Number | 评分字段最大分（支持 3/5/10，默认 5） |
 | fields[].init_row_length | 否 | Number | 表格题初始行数（1-5，默认 3） |
 | fields[].dimensions | 否 | Array | 表格题列定义 |
+| fields[].预设 / 校验 / 规格属性 | 否 | — | 各字段类型支持的额外属性，详见下方「字段特定属性」 |
 | description | 否 | String | 表单描述 |
-| setting.success_message | 否 | String | 提交成功后展示的消息 |
+| setting | 否 | Object | 表单设置对象（提交后行为、表单状态、提交限制、权限、Webhook 等）。完整字段见[表单设置 Schema](/api_v1/schemas/form_setting)。 |
 | folder_token | 否 | String | 目标文件夹 token；设置后新表单会放入该文件夹 |
 
 #### 支持的字段类型
 
-`TextField` `TextArea` `NumberField` `EmailField` `MobileField` `IdCardField` `NameField` `RadioButton` `CheckBox` `DropDown` `DateTimeField` `RatingField` `TableField`
+`TextField` `TextArea` `NumberField` `EmailField` `MobileField` `TelephoneField` `IdCardField` `NameField` `AddressField` `LinkField` `GeoField` `AttachmentField` `DateTimeField` `RatingField` `NpsField` `RadioButton` `CheckBox` `DropDown` `TableField`
 
 表格题（TableField）的列可选类型：`TextField` `TextArea` `NumberField` `EmailField` `MobileField` `IdCardField` `NameField` `CheckBox` `DropDown` `DateTimeField` `RatingField`
+
+#### 字段特定属性
+
+下列属性按字段类型分组，仅对应类型识别，传给其他类型会被静默忽略。所有属性均可选；不传则使用字段默认值。
+
+| 字段类型 | 属性 | 类型 | 说明 |
+| ------ | ------ | ------ | ------ |
+| `TextField` / `TextArea` / `MobileField` / `TelephoneField` / `LinkField` | predefined_value | String | 默认预填值 |
+| 同上 | placeholder | String | 占位提示文案 |
+| `EmailField` | placeholder | String | 占位提示文案 |
+| `NumberField` | predefined_value | String | 默认预填值 |
+| `NumberField` | placeholder | String | 占位提示文案 |
+| `NumberField` | range_min | Number | 允许的最小值（闭区间） |
+| `NumberField` | range_max | Number | 允许的最大值（闭区间） |
+| `NumberField` | precision | Integer | 小数位数（0–6） |
+| `DateTimeField` | predefined_value | String | 默认值。可填与 precision 匹配的日期串，或 `today` / `yesterday` / `tomorrow` |
+| `DateTimeField` | precision | String | 精度：`year` / `month` / `day`（默认） / `hour` / `minute` / `second` |
+| `AttachmentField` | max_size | Number | 单文件最大尺寸（MB） |
+| `AttachmentField` | max_file_quantity | Integer | 最多上传文件数（1–15） |
+| `NpsField` | minimum_ratings_display_text | String | 最低分文案 |
+| `NpsField` | maximum_ratings_display_text | String | 最高分文案 |
 
 ### Response
 
@@ -114,7 +141,7 @@ POST https://jinshuju.net/api/v1/forms
 | 状态码 | 说明 |
 | ------ | ------ |
 | 201 | 创建成功 |
-| 400 | 参数校验失败（name 或 fields 为空、字段类型非法等） |
+| 400 | 参数校验失败（name 或 fields 为空、字段类型非法、表单设置校验失败等；设置校验规则详见[表单设置 Schema](/api_v1/schemas/form_setting)的"错误处理"小节） |
 | 401 | 未认证 |
 | 402 | 当前套餐不支持 V1 API |
 | 404 | 指定的 folder_token 不存在，或当前账号无权管理该文件夹 |

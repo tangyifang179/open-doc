@@ -36,7 +36,15 @@ PATCH https://jinshuju.net/api/v1/forms/FORM_TOKEN
 {
     "name": "产品需求调研表（2026 版）",
     "description": "用于 Q2 客户满意度调研",
-    "setting": { "success_message": "感谢您的反馈！" },
+    "setting": {
+        "success_message": "感谢您的反馈！",
+        "password_required": true,
+        "access_password": "abc123",
+        "allowed_audience": "public",
+        "fill_frequency": { "fill_type": "repeatable", "condition": "by_ip", "cycle_period": "every_day", "limited_time": 3 },
+        "by_time_range_close_rule": { "start_time": "2026-05-01T09:00:00+08:00", "end_time": "2026-05-31T18:00:00+08:00" },
+        "entry_post_url": "https://example.com/webhook"
+    },
     "fields": {
         "add": [
             { "type": "NumberField", "label": "年龄" },
@@ -72,7 +80,7 @@ PATCH https://jinshuju.net/api/v1/forms/FORM_TOKEN
 | FORM_TOKEN | 是 | String | 表单 Token（URL 路径参数） |
 | name | 否 | String | 表单名称 |
 | description | 否 | String | 表单描述 |
-| setting.success_message | 否 | String | 提交成功后展示的消息 |
+| setting | 否 | Object | 表单设置对象，涵盖提交后行为、表单状态、提交限制、权限、Webhook 等。完整字段见[表单设置 Schema](/api_v1/schemas/form_setting)。仅传入的 key 会被更新，未提交的 key 保持原值。 |
 | fields | 否 | Object | 字段操作聚合对象，包含 `add` / `remove` / `update` / `update_choices` 四个子键 |
 | fields.add | 否 | Array | 要新增的字段；结构同[创建表单](/api_v1/endpoints/create_form)的 `fields`；可额外指定 `position` 指定插入位置（0-based） |
 | fields.remove | 否 | Array(String) | 要删除的字段的 `api_code` 数组 |
@@ -84,6 +92,7 @@ PATCH https://jinshuju.net/api/v1/forms/FORM_TOKEN
 | fields.update[].notes | 否 | String | 新的描述/提示 |
 | fields.update[].rating_max | 否 | Number | 评分题新的最大分 |
 | fields.update[].dimensions | 否 | Array | 表格题列替换，需带 `api_code` 以保留列身份 |
+| fields.update[].字段特定属性 | 否 | — | 与[创建表单](/api_v1/endpoints/create_form)的「字段特定属性」一致：`predefined_value` / `placeholder` / `range_min` / `range_max` / `precision` / `max_size` / `max_file_quantity` / `minimum_ratings_display_text` / `maximum_ratings_display_text` 等。仅对应类型识别，传给其他类型会被静默忽略。未传的属性保持原值。 |
 | fields.update_choices | 否 | Array | 选项增删改；适用于单选/多选/下拉，以及表格题列（下拉/多选列） |
 | fields.update_choices[].field_api_code | 是 | String | 要改的字段 `api_code`（表格题列则传列的 `api_code`） |
 | fields.update_choices[].add | 否 | Array | 要新增的选项 |
@@ -101,7 +110,7 @@ PATCH https://jinshuju.net/api/v1/forms/FORM_TOKEN
 | 状态码 | 说明 |
 | ------ | ------ |
 | 200 | 更新成功 |
-| 400 | 未指定任何编辑操作；要删除/更新的字段不存在；字段不支持选项；字段类型非法 |
+| 400 | 未指定任何编辑操作；要删除/更新的字段不存在；字段不支持选项；字段类型非法；表单设置校验失败（详见[表单设置 Schema](/api_v1/schemas/form_setting)的"错误处理"小节） |
 | 401 | 未认证 |
 | 402 | 当前套餐不支持 V1 API |
 | 404 | 表单不存在或无权访问 |
