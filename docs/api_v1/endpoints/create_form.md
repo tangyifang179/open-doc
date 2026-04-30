@@ -73,7 +73,6 @@ POST https://jinshuju.net/api/v1/forms
 | fields[].rating_max | 否 | Number | 评分字段最大分（支持 3/5/10，默认 5） |
 | fields[].init_row_length | 否 | Number | 表格题初始行数（1-5，默认 3） |
 | fields[].dimensions | 否 | Array | 表格题列定义 |
-| fields[].预设 / 校验 / 规格属性 | 否 | — | 各字段类型支持的额外属性，详见下方「字段特定属性」 |
 | description | 否 | String | 表单描述 |
 | setting | 否 | Object | 表单设置对象（提交后行为、表单状态、提交限制、权限、Webhook 等）。完整字段见[表单设置 Schema](/api_v1/schemas/form_setting)。 |
 | folder_token | 否 | String | 目标文件夹 token；设置后新表单会放入该文件夹 |

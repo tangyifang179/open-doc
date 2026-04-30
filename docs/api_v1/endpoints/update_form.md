@@ -92,12 +92,13 @@ PATCH https://jinshuju.net/api/v1/forms/FORM_TOKEN
 | fields.update[].notes | 否 | String | 新的描述/提示 |
 | fields.update[].rating_max | 否 | Number | 评分题新的最大分 |
 | fields.update[].dimensions | 否 | Array | 表格题列替换，需带 `api_code` 以保留列身份 |
-| fields.update[].字段特定属性 | 否 | — | 与[创建表单](/api_v1/endpoints/create_form)的「字段特定属性」一致：`predefined_value` / `placeholder` / `range_min` / `range_max` / `precision` / `max_size` / `max_file_quantity` / `minimum_ratings_display_text` / `maximum_ratings_display_text` 等。仅对应类型识别，传给其他类型会被静默忽略。未传的属性保持原值。 |
 | fields.update_choices | 否 | Array | 选项增删改；适用于单选/多选/下拉，以及表格题列（下拉/多选列） |
 | fields.update_choices[].field_api_code | 是 | String | 要改的字段 `api_code`（表格题列则传列的 `api_code`） |
 | fields.update_choices[].add | 否 | Array | 要新增的选项 |
 | fields.update_choices[].remove | 否 | Array | 要删除的选项（按 `api_code`） |
 | fields.update_choices[].update | 否 | Array | 要重命名的选项（按 `api_code`，传新的 `value`） |
+
+> **字段特定属性（`fields.update[]` 子项）**：可选 `predefined_value` / `placeholder` / `range_min` / `range_max` / `precision` / `max_size` / `max_file_quantity` / `minimum_ratings_display_text` / `maximum_ratings_display_text` 等，详见[创建表单](/api_v1/endpoints/create_form)的「字段特定属性」。仅对应类型识别，传给其他类型会被静默忽略。未传的属性保持原值。
 
 > **重要**：修改选项名字请使用 `fields.update_choices[].update`，**不要** remove 再 add，否则选项的 `api_code` 会变，历史数据会出错。
 
