@@ -74,12 +74,24 @@ POST https://jinshuju.net/api/v1/forms
 | fields[].init_row_length | 否 | Number | 表格题初始行数（1-5，默认 3） |
 | fields[].dimensions | 否 | Array | 表格题列定义 |
 | description | 否 | String | 表单描述 |
-| setting | 否 | Object | 表单设置对象（提交后行为、表单状态、提交限制、权限、Webhook 等）。完整字段见[表单设置 Schema](/api_v1/schemas/form_setting)。 |
+| setting | 否 | Object | 表单设置对象（提交后行为、表单状态、提交限制、权限、Webhook、通知规则等）。完整字段见[表单设置 Schema](/api_v1/schemas/form_setting)。`setting.notification_rules` 用于配置企微 / 钉钉 / Webhook 类高级通知规则，详见 schema。 |
 | folder_token | 否 | String | 目标文件夹 token；设置后新表单会放入该文件夹 |
 
 #### 支持的字段类型
 
-`TextField` `TextArea` `NumberField` `EmailField` `MobileField` `TelephoneField` `IdCardField` `NameField` `AddressField` `LinkField` `GeoField` `AttachmentField` `DateTimeField` `RatingField` `NpsField` `RadioButton` `CheckBox` `DropDown` `TableField`
+**基础字段（19 种）**：
+
+`TextField` `TextArea` `NumberField` `EmailField` `MobileField` `TelephoneField` `IdCardField` `NameField` `AddressField` `LinkField` `GeoField` `AttachmentField` `DateTimeField` `TimeField` `RatingField` `NpsField` `RadioButton` `CheckBox` `DropDown`
+
+**进阶字段**：
+
+`TableField` `CascadeDropDown` `SortField` `LikertField` `MatrixField` `MatrixScaleField` `ImageRadioButton` `ImageCheckBox` `GoodsField` `FormulaField` `ReservationField` `FormAssociation` `ESignatureField` `AudioField`
+
+**装饰 / 控件类**（不收集数据）：
+
+`StyledText` `PageBreak` `WidgetButton` `WidgetContact` `WidgetMap` `WidgetMarquee`
+
+> 部分字段需要专业版及以上套餐（`FormulaField` / `GoodsField` / `FormAssociation` / `ESignatureField` / `WidgetButton` 等）；账号套餐不支持时返回 400 并附带升级提示。
 
 表格题（TableField）的列可选类型：`TextField` `TextArea` `NumberField` `EmailField` `MobileField` `IdCardField` `NameField` `CheckBox` `DropDown` `DateTimeField` `RatingField`
 
@@ -99,10 +111,41 @@ POST https://jinshuju.net/api/v1/forms
 | `NumberField` | precision | Integer | 小数位数（0–6） |
 | `DateTimeField` | predefined_value | String | 默认值。可填与 precision 匹配的日期串，或 `today` / `yesterday` / `tomorrow` |
 | `DateTimeField` | precision | String | 精度：`year` / `month` / `day`（默认） / `hour` / `minute` / `second` |
+| `TimeField` | predefined_value | String | 默认值（`HH:MM` 或 `HH:MM:SS`） |
+| `TimeField` | include_second | Bool | 是否精确到秒 |
+| `AddressField` | predefined_value | Object | 默认地址 `{province, city, district, street}` |
+| `AddressField` | changeable | Bool | 用户是否可在填写页修改 |
+| `AddressField` | enable_auto_position | Bool | 是否启用自动定位 |
 | `AttachmentField` | max_size | Number | 单文件最大尺寸（MB） |
 | `AttachmentField` | max_file_quantity | Integer | 最多上传文件数（1–15） |
+| `AttachmentField` | media_type | String | `all` / `image` / `video` 等 |
+| `AttachmentField` | mobile_camera_only | Bool | 移动端是否仅允许拍照（不开放相册） |
 | `NpsField` | minimum_ratings_display_text | String | 最低分文案 |
 | `NpsField` | maximum_ratings_display_text | String | 最高分文案 |
+| `RatingField` | rating_max | Number | 评分最大分（3 / 5 / 10，默认 5） |
+| `SortField` | random_choices | Bool | 选项随机展示 |
+| `AudioField` | max_duration | Number | 最大录音时长（秒） |
+| `CascadeDropDown` | levels | Integer | 级联层数 |
+| `CascadeDropDown` | choice_filterable | Bool | 是否允许搜索选项 |
+| `CascadeDropDown` | random_choices | Bool | 选项随机展示 |
+| `LikertField` / `MatrixField` / `MatrixScaleField` | horizontal_on_mobile | Bool | 移动端横向排版 |
+| `LikertField` | likert_choice_style | String | 单选样式 |
+| `LikertField` | minimum_length / maximum_length | Integer | 单选数量限制 |
+| `GoodsField` | unit | String | 计量单位文案（如「件」） |
+| `GoodsField` | collapse_on_mobile | Bool | 移动端折叠展示 |
+| `GoodsField` | columns_on_mobile | Integer | 移动端列数 |
+| `FormulaField` | formula_display | String | 公式表达式（HTML 标签内嵌字段引用） |
+| `FormulaField` | result_display_type | String | 结果展示形式（`text` / `number` / `date`） |
+| `FormulaField` | precision / display_as_percentage / thousands_separator | - | 数字结果展示控制 |
+| `ReservationField` | allow_multiple_items | Bool | 是否允许选多个时段 |
+| `ReservationField` | item_allow_multiple_reservations | Bool | 单时段是否允许多人预约 |
+| `FormAssociation` | associated_form_token | String | 被关联表单的 token |
+| `FormAssociation` | associated_field_api_codes | Array(String) | 关联字段（最多 4 个） |
+| `FormAssociation` | privacy_safe | Bool | 是否隐去关联表单的隐私字段 |
+| `PageBreak` | disable_previous_page | Bool | 禁止返回上一页 |
+| `PageBreak` | previous_page_text / next_page_text | String | 自定义按钮文案 |
+
+> 完整属性以及最新约束以服务端为准；常见用法可参考 [MCP `describe_field_type`](/mcp/) 工具的输出。
 
 ### Response
 

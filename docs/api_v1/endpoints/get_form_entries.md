@@ -33,6 +33,9 @@
 # 第一页
 GET https://jinshuju.net/api/v1/forms/FORM_TOKEN/entries
 
+# 按字段值过滤（filters 是一个 JSON 字符串）
+GET https://jinshuju.net/api/v1/forms/FORM_TOKEN/entries?filters=[{"field":"field_3","operator":"gte","value":6}]
+
 # 如果数据过多，请求后续的数据
 GET https://jinshuju.net/api/v1/forms/FORM_TOKEN/entries?next=
 ```
@@ -41,6 +44,7 @@ GET https://jinshuju.net/api/v1/forms/FORM_TOKEN/entries?next=
 |------------|------| ------ |----------------------|
 | FORM_TOKEN | 是    | String | 表单Token              |
 | created_at | 否    | String | 根据时间筛选数据，返回该时间点以后的数据 |
+| filters    | 否    | JSON 数组（也可作为字符串传入） | 字段值过滤条件，多条件 AND 组合。详见下方「filters 字段过滤」 |
 | next       | 否    | String | 分页参数。返回本次ID记录之后的数据   |
 
 ### 注意
@@ -53,6 +57,59 @@ GET https://jinshuju.net/api/v1/forms/FORM_TOKEN/entries?next=
     "created_at": "2012-12-25 12:13:15"    // 包含时分秒
 }
 ```
+
+### filters 字段过滤
+
+`filters` 用于把字段值条件下推到数据库查询，避免拉全量再本地过滤。每个元素是 `{field, operator, value}` 三元组，多个条件之间是 **AND** 关系。
+
+| 元素 | 类型 | 说明 |
+| ---- | ---- | ---- |
+| `field` | String | 字段的 `api_code`（如 `field_3`），或系统字段名 `created_at` |
+| `operator` | String | 操作符，见下方表格 |
+| `value` | 取决于 operator | 比较值；`null` / `not_null` 不需要传 |
+
+**支持的 operator**：
+
+| 类别 | operator | value 形式 | 示例 |
+| ---- | -------- | ---------- | ---- |
+| 等值 | `eq` / `ne` | 标量 | `{"field":"field_1","operator":"eq","value":"张三"}` |
+| 比较 | `gt` / `gte` / `lt` / `lte` | 标量 | `{"field":"field_3","operator":"gte","value":6}` |
+| 区间 | `between` / `not_between` | 2 元素数组 `[min, max]`（闭区间） | `{"field":"field_3","operator":"between","value":[80,100]}` |
+| 集合 | `any_in` / `none_in` | 数组 | `{"field":"field_2","operator":"any_in","value":["北京","上海"]}` |
+| 文本 | `like` / `not_like` | 子串（不带 SQL 通配符；服务端做不区分大小写的子串匹配） | `{"field":"field_2","operator":"like","value":"张"}` 匹配"张三""小张" |
+| 是否为空 | `null` / `not_null` | 省略 | `{"field":"field_4","operator":"not_null"}` |
+
+**operator 与字段类型的兼容性**：每种字段类型只接受其支持的 operator（例如 `NumberField` 接受 `gte`，`TextField` 不接受），不匹配会返回 400 并列出当前字段允许的 operator。
+
+| 字段类型 | 可用 operator |
+| -------- | ------------- |
+| 文本类（TextField / NameField / EmailField / MobileField / TelephoneField / IdCardField / LinkField / TextArea） | `eq` `ne` `any_in` `none_in` `null` `not_null` `like` `not_like` |
+| `NumberField` | `eq` `ne` `null` `not_null` `gte` `gt` `lte` `lt` `between` `not_between` |
+| `DateTimeField` / `DateField` / 系统字段 `created_at` | `eq` `ne` `null` `not_null` `like` `gte` `gt` `lte` `lt` `between` `not_between` |
+| `RatingField` / `NpsField` | `eq` `ne` `null` `not_null` `gte` `gt` `lte` `lt` |
+| `RadioButton` / `CheckBox` / `DropDown` | `eq` `ne` `any_in` `none_in` `null` `not_null` `like` `not_like` |
+| `FormAssociation` | `eq` `ne` `any_in` `none_in` `null` `not_null` |
+| `AttachmentField` / `GeoField` / `TableField` | `null` `not_null` `like` |
+| `ESignatureField` | `null` `not_null` |
+
+> 选项类字段（RadioButton / CheckBox / DropDown）的 `value` 传**选项的 `api_code`**（不是中文 label），与 `create_entry` / `update_entry` 一致。
+
+**排序行为**：当 `filters` 中包含 `created_at` 时，结果按 `created_at` 升序返回；否则按 `serial_number` 升序。`next` 仍然是 `serial_number` 游标。
+
+**400 错误响应示例**：
+
+```json
+// operator 不合法
+{ "error_description": "Unsupported operator 'foobar'." }
+
+// operator 与字段类型不匹配
+{ "error_description": "Operator 'gte' not supported for field 'field_1' (NameField). Allowed operators: eq, ne, any_in, none_in, null, not_null, like, not_like." }
+
+// between / not_between 必须传 2 元素数组
+{ "error_description": "Operator 'between' requires a 2-element array value." }
+```
+
+> 提示：`filters` 也可以以 URL 参数传入（重复 `filters[]` 嵌套结构），但建议使用 JSON 字符串形式以避免歧义。`filters` 为空数组、`null` 或非法 JSON 时被静默忽略，等价于不传 `filters`。
 
 ### Response
 

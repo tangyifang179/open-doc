@@ -33,12 +33,16 @@
 # 第一页
 GET https://jinshuju.net/api/v1/forms
 
+# 按表单名称关键词搜索
+GET https://jinshuju.net/api/v1/forms?q=报名
+
 # 如果表单过多，请求后续的表单
 GET https://jinshuju.net/api/v1/forms?next=60cc514761936ced06123456
 ```
 
 | 参数名称 | 是否必须 | 类型 | 说明 |
 | ------ | ------ | ------ | ------ |
+| q | 否 | String | 关键词模糊匹配表单名称（不区分大小写）。匹配范围包含表单名称（`name`）和子标题（`subname`）。`total` 返回的是匹配后的总数。 |
 | next | 否 | String | 分页参数。返回本次ID记录之后的表单 |
 
 ### Response

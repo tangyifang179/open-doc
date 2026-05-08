@@ -80,7 +80,7 @@ PATCH https://jinshuju.net/api/v1/forms/FORM_TOKEN
 | FORM_TOKEN | 是 | String | 表单 Token（URL 路径参数） |
 | name | 否 | String | 表单名称 |
 | description | 否 | String | 表单描述 |
-| setting | 否 | Object | 表单设置对象，涵盖提交后行为、表单状态、提交限制、权限、Webhook 等。完整字段见[表单设置 Schema](/api_v1/schemas/form_setting)。仅传入的 key 会被更新，未提交的 key 保持原值。 |
+| setting | 否 | Object | 表单设置对象，涵盖提交后行为、表单状态、提交限制、权限、Webhook、通知规则等。完整字段见[表单设置 Schema](/api_v1/schemas/form_setting)。仅传入的 key 会被更新，未提交的 key 保持原值；但 `setting.notification_rules` 是 **REPLACE 语义**——传该字段会清除当前 API 创建的所有通知规则后重建。 |
 | fields | 否 | Object | 字段操作聚合对象，包含 `add` / `remove` / `update` / `update_choices` 四个子键 |
 | fields.add | 否 | Array | 要新增的字段；结构同[创建表单](/api_v1/endpoints/create_form)的 `fields`；可额外指定 `position` 指定插入位置（0-based） |
 | fields.remove | 否 | Array(String) | 要删除的字段的 `api_code` 数组 |

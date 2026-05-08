@@ -105,6 +105,41 @@
 | post_new_entry | Bool | 是否在新建数据时触发 webhook（默认 `true`）。设为 `false` 可在保留地址的同时暂停新建触发。 |
 | post_updated_entry | Bool | 是否在更新数据时触发 webhook（默认 `false`）。 |
 
+## 通知规则（notification_rules）
+
+`setting.notification_rules` 用于配置企微 / 钉钉 / Webhook 类高级通知规则。每条规则在表单提交后触发，把数据推送到指定地址。
+
+> **REPLACE 语义**：`update` 接口里只要传了 `notification_rules` 字段（哪怕是空数组 `[]`），都会先**清空当前 API 创建的所有通知规则**再重建。如不希望覆盖现有规则，请省略 `notification_rules` 字段；后台手工配置的规则不会被清。
+
+```json
+"notification_rules": [
+  {
+    "approach": "WXWORK",
+    "url": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxx",
+    "content": "新报名：{{field_1}}（{{field_2}}）",
+    "trigger_scope": "all_new",
+    "enabled": true
+  },
+  {
+    "approach": "DING_TALK",
+    "url": "https://oapi.dingtalk.com/robot/send?access_token=xxx",
+    "mentioned_mobile_list": ["13800000000"],
+    "trigger_scope": "all_new"
+  }
+]
+```
+
+| 参数名称 | 是否必须 | 类型 | 说明 |
+| ------ | ------ | ------ | ------ |
+| approach | 是 | String | 通知方式：`WXWORK`（企业微信）、`DING_TALK`（钉钉）、`WEBHOOK`（自定义 Webhook） |
+| url | 是 | String | 接收地址。每种 approach 对应固定的目标平台 URL 格式 |
+| content | 否 | String | 通知正文模板。可使用 `{{field_X}}` 引用字段值 |
+| trigger_scope | 否 | String | 触发范围。默认 `all_new`（每条新提交都触发） |
+| mentioned_mobile_list | 否 | Array&lt;String&gt; | 被提及的手机号列表（仅 `DING_TALK` 等支持 `@` 用户的渠道有效） |
+| enabled | 否 | Bool | 是否启用。默认 `true` |
+
+> 短信、邮件、微信一次性订阅等需要收件人 / 模板的通知形式（`SMS` / `EMAIL` / `WEIXIN_ONETIME` 等）目前不支持通过 v1 API 配置，需登录后台或使用专门的接口。
+
 ## 错误处理
 
 下列校验失败都会返回 `400 Bad Request`，错误信息中会直接说明问题所在（可直接给 Agent 做反馈）：
