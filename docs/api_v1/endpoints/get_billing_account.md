@@ -100,10 +100,10 @@ GET https://jinshuju.net/api/v1/billing_account
 | usage | 否 | Object \| null | 本月度用量信息；账户未生成本月用量记录时为 `null` |
 | usage.next_reset_date | 是 | String | 下次重置日（`YYYY-MM-DD`） |
 | usage.sms / active_mail / entry_quota / storage_quota | 是 | Object | 各项额度数据（见下） |
-| usage.{vas}.total_quota | 是 | Number | 本计费周期内的总额度 |
-| usage.{vas}.total_balance | 是 | Number | 当前剩余总额度 |
-| usage.{vas}.month_balance | 是 | Number | 当前剩余月度额度 |
-| usage.{vas}.consumed_quota | 是 | Number | 已消耗额度 |
+| usage.\{vas\}.total_quota | 是 | Number | 本计费周期内的总额度 |
+| usage.\{vas\}.total_balance | 是 | Number | 当前剩余总额度 |
+| usage.\{vas\}.month_balance | 是 | Number | 当前剩余月度额度 |
+| usage.\{vas\}.consumed_quota | 是 | Number | 已消耗额度 |
 | feature_trial | 是 | Object | 特性试用状态 |
 | feature_trial.in_use | 是 | Boolean | 是否在试用中 |
 | feature_trial.expired | 是 | Boolean | 试用是否已过期 |
