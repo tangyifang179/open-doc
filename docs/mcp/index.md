@@ -18,6 +18,7 @@ MCP（Model Context Protocol）是一种开放的标准化协议，用于连接 
 | 管理表单 | 查询表单列表、获取表单详情、创建新表单、编辑表单结构与设置 |
 | 表单设置 | 配置表单提交后行为、发布/停止收集、提交限制、访问密码/可见人群、Webhook 等，详见[表单设置 Schema](/api_v1/schemas/form_setting) |
 | 管理数据 | 查询数据列表、获取单条数据、新增数据、修改数据、删除数据 |
+| 账户与团队 | 查询当前用户信息、企业账户信息（套餐 / 用量 / 到期）、企业成员列表 |
 | 账单查询 | 查询发票信息、查询付款记录 |
 
 > MCP 的 `create_form` / `edit_form` / `get_form` 工具中 `setting` 对象的字段与 v1 API 完全对齐；未在白名单里的 key 会被静默忽略，因此所有可用字段必须来自[表单设置 Schema](/api_v1/schemas/form_setting)。

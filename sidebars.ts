@@ -57,6 +57,15 @@ const sidebars: SidebarsConfig = {
                 'api_v1/endpoints/delete_form_entry',
               ],
             },
+            {
+              type: 'category',
+              label: '账户',
+              items: [
+                'api_v1/endpoints/get_me',
+                'api_v1/endpoints/get_billing_account',
+                'api_v1/endpoints/get_billing_account_users',
+              ],
+            },
           ],
         },
         {

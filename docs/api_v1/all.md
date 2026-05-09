@@ -119,3 +119,29 @@ DELETE /api/v1/forms/FORM_TOKEN/entries/SERIAL_NUMBER
 ```
 
 [查看详情](/api_v1/endpoints/delete_form_entry)
+
+## 账户
+
+### 获取当前用户信息
+
+```
+GET /api/v1/me
+```
+
+[查看详情](/api_v1/endpoints/get_me)
+
+### 获取当前企业账户信息
+
+```
+GET /api/v1/billing_account
+```
+
+[查看详情](/api_v1/endpoints/get_billing_account)
+
+### 获取企业账户成员列表
+
+```
+GET /api/v1/billing_account/users
+```
+
+[查看详情](/api_v1/endpoints/get_billing_account_users)
