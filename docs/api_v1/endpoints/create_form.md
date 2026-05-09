@@ -89,7 +89,9 @@ POST https://jinshuju.net/api/v1/forms
 
 **装饰 / 控件类**（不收集数据）：
 
-`StyledText` `PageBreak` `WidgetButton` `WidgetContact` `WidgetMap` `WidgetMarquee`
+`PageBreak` `SectionBreak` `WidgetButton` `WidgetContact` `WidgetMap` `WidgetMarquee`
+
+> `SectionBreak` 即"描述字段"，用于在表单里插入一段说明文字（不收集数据）。
 
 > 部分字段需要专业版及以上套餐（`FormulaField` / `GoodsField` / `FormAssociation` / `ESignatureField` / `WidgetButton` 等）；账号套餐不支持时返回 400 并附带升级提示。
 
