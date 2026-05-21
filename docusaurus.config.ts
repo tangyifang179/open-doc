@@ -86,16 +86,45 @@ const config: Config = {
           title: '文档',
           items: [
             {
+              label: 'MCP Server',
+              to: '/mcp',
+            },
+            {
               label: 'API v1',
               to: '/api_v1',
             },
             {
               label: 'Webhook',
-              to: '/webhook/home',
+              to: '/webhook',
             },
             {
               label: 'URL 传参',
-              to: '/url_params/overview',
+              to: '/url_params',
+            },
+            {
+              label: '表单嵌入',
+              to: '/embedded/overview',
+            },
+          ],
+        },
+        {
+          title: '开发者资源',
+          items: [
+            {
+              label: '场景案例',
+              to: '/best_practice',
+            },
+            {
+              label: 'API 状态码',
+              to: '/api_v1/status_code',
+            },
+            {
+              label: 'API 请求速率',
+              to: '/api_v1/request_rate',
+            },
+            {
+              label: 'GitHub',
+              href: 'https://github.com/jinshuju',
             },
           ],
         },
@@ -105,6 +134,10 @@ const config: Config = {
             {
               label: '金数据首页',
               href: 'https://jinshuju.net',
+            },
+            {
+              label: '帮助中心',
+              href: 'https://help.jinshuju.net',
             },
           ],
         },
