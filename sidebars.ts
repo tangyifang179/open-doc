@@ -12,6 +12,9 @@ const sidebars: SidebarsConfig = {
       label: 'MCP Server',
       items: [
         'mcp/index',
+        'mcp/configuration',
+        'mcp/use_cases',
+        'mcp/oauth',
       ],
     },
     {
